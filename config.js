@@ -27,7 +27,17 @@ window.SITE_CONFIG = {
     'https://link.coupang.com/a/evYmgwAank', // 토: 노란색 소품
     'https://link.coupang.com/a/evYnVSg6DI', // 금: 흰색 소품
     'https://link.coupang.com/a/evYqnz3cSy'  // 수: 네이비 소품
-  ]
+  ],
+  // 음식 이름 → 쿠팡 파트너스 공식 링크 매핑.
+  // 여기에 있는 음식만 '오늘의 행운 음식'으로 표시됩니다 (라벨과 상품이 항상 일치).
+  // 새 음식 링크를 만들면 한 줄씩 추가하면 됩니다.
+  coupangFoodMap: {
+    '매실차': 'https://link.coupang.com/a/evX7g0hQCi',   // 목
+    '토마토': 'https://link.coupang.com/a/evX9fipMfk',   // 화
+    '고구마': 'https://link.coupang.com/a/evYbL2wGDQ',   // 토
+    '생강차': 'https://link.coupang.com/a/evYdFqtTy0',   // 금
+    '검은콩자반': 'https://link.coupang.com/a/evYeTfpUu4' // 수
+  }
 };
 
 (function () {
