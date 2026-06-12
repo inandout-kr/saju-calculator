@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://inandout-kr.github.io/saju-calculator/sitemap.xml
+Sitemap: https://bosalmansae.com/sitemap.xml
