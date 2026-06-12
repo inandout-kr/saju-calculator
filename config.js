@@ -4,7 +4,7 @@
    ───────────────────────────────────────────────────────────── */
 window.SITE_CONFIG = {
   // Google Analytics 4 측정 ID — analytics.google.com → 관리 → 데이터 스트림 (형식: G-XXXXXXXXXX)
-  ga4: '',
+  ga4: 'G-H2PR89HM3K',
   // 카카오 AdFit 광고단위 ID — adfit.kakao.com (형식: DAN-XXXXXXXXXXXX, 320x100 단위 권장)
   adfit: '',
   // Google AdSense 클라이언트 ID — adsense.google.com (형식: ca-pub-XXXXXXXXXXXXXXXX)
