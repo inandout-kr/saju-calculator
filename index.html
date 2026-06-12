@@ -282,6 +282,7 @@ button.go:hover{filter:brightness(1.08)}
   <nav aria-label="읽을거리">
     <a href="guide-basics.html">사주 기초</a> · <a href="guide-sipsin.html">십성 풀이</a> · <a href="guide-sinsal.html">신살 풀이</a> · <a href="guide-daeun.html">대운·세운</a>
   </nav>
+  이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.<br>
   明月菩薩 명월보살 만세력 © 2026 · 본 사이트의 운세 콘텐츠는 참고용입니다
 </footer>
 </div>
@@ -1042,7 +1043,7 @@ function renderFortune(r,dStem){
     <a href="${foodUrl}" target="_blank" rel="nofollow sponsored noopener">🛒 ${EL_KO[f.luckyEl]}(${EL_HJ[f.luckyEl]}) 기운 · 행운의 음식 보러가기</a>
     <a href="${itemUrl}" target="_blank" rel="nofollow sponsored noopener">🎁 ${f.color.good} · 행운의 소품 보러가기</a>
   </div>`;
-  if(SC.coupangTag||SC.coupangFood)fh+=`<div class="coupang-note">위 링크는 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.</div>`;
+  if(SC.coupangTag||SC.coupangFood)fh+=`<div class="coupang-note">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>`;
   $('fortune').innerHTML=fh;
 }
 
