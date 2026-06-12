@@ -7,7 +7,14 @@
 <meta name="description" content="생년월일시로 사주팔자 · 십성 · 대운 · 신살 · 오늘의 운세까지, 절기 천문 계산 기반 진짜 만세력 사주 계산기">
 <meta property="og:title" content="明月菩薩 : 명월보살 만세력">
 <meta property="og:description" content="사주팔자 · 대운 · 신살 · 오늘/올해의 운세 · 개운 지역/색깔/음식 추천">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://inandout-kr.github.io/saju-calculator/">
+<meta property="og:image" content="https://inandout-kr.github.io/saju-calculator/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+<script src="config.js"></script>
 <style>
 :root{
   --bg:#f7f3ea; --card:#fffdf7; --line:#e5dcc8; --ink:#3a3226; --sub:#8a7e68;
@@ -19,6 +26,27 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Serif KR','Nanum My
 header{text-align:center;margin:18px 0 28px}
 header h1{font-size:30px;letter-spacing:6px;font-weight:700}
 header p{color:var(--sub);font-size:14px;margin-top:6px;letter-spacing:1px}
+/* ── 상단 내비게이션 ── */
+.topnav{display:flex;gap:8px;justify-content:flex-start;overflow-x:auto;padding:2px 2px 14px;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{flex:none;padding:8px 18px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;color:var(--sub);text-decoration:none;font-size:14px;letter-spacing:1px;white-space:nowrap}
+.topnav a:hover{border-color:#c9b88a;color:var(--ink)}
+.topnav a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* ── 공유 바 ── */
+.share-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.share-bar button{flex:1;min-width:130px;font:inherit;font-size:14.5px;padding:11px 8px;border:1px solid var(--line);border-radius:10px;background:#fffdf7;color:var(--ink);cursor:pointer;letter-spacing:1px}
+.share-bar button:hover{border-color:#c9b88a;box-shadow:0 1px 6px rgba(120,100,60,.12)}
+.share-bar button.kko{background:#fee500;border-color:#fee500;font-weight:700}
+/* ── 광고 슬롯 / 행운템 ── */
+.ad-slot{display:flex;justify-content:center;margin:0 0 20px}
+.ad-slot:empty{display:none}
+.coupang-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.coupang-row a{flex:1;min-width:150px;text-align:center;text-decoration:none;font-size:13.5px;padding:10px 8px;border:1px solid var(--line);border-radius:10px;background:#fffdf7;color:var(--ink)}
+.coupang-row a:hover{border-color:#c9b88a}
+.coupang-note{font-size:11.5px;color:var(--sub);margin-top:8px}
+/* ── 하단 푸터 ── */
+.site-footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--sub);line-height:2}
+.site-footer a{color:var(--sub)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 2px 10px rgba(120,100,60,.06)}
 .card h2{font-size:17px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--line);letter-spacing:2px}
 .frow{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:12px}
@@ -136,6 +164,14 @@ button.go:hover{filter:brightness(1.08)}
   <p>萬歲曆 · 생년월일시로 사주팔자 · 대운 · 신살을 확인합니다</p>
 </header>
 
+<nav class="topnav" aria-label="주요 메뉴">
+  <a href="./" class="on" aria-current="page">만세력</a>
+  <a href="guide-basics.html">사주 기초</a>
+  <a href="guide-sipsin.html">십성 풀이</a>
+  <a href="guide-sinsal.html">신살 풀이</a>
+  <a href="guide-daeun.html">대운·세운</a>
+</nav>
+
 <div class="card">
   <h2>출생 정보</h2>
   <div class="frow">
@@ -192,10 +228,18 @@ button.go:hover{filter:brightness(1.08)}
 </div>
 
 <div id="result">
+  <div class="share-bar" aria-label="공유">
+    <button type="button" id="btnShare" class="kko">💬 친구에게 공유</button>
+    <button type="button" id="btnCopy">🔗 링크 복사</button>
+    <button type="button" id="btnSaveImg">📷 결과 이미지 저장</button>
+  </div>
+
   <div class="card">
     <h2>기본 정보</h2>
     <div class="chips" id="chips"></div>
   </div>
+
+  <div class="ad-slot" aria-hidden="true"></div>
 
   <div class="card">
     <h2>사주 원국 (四柱原局)</h2>
@@ -219,6 +263,8 @@ button.go:hover{filter:brightness(1.08)}
     <div id="fortune"></div>
   </div>
 
+  <div class="ad-slot" aria-hidden="true"></div>
+
   <div class="card">
     <h2>참고</h2>
     <div class="note">
@@ -231,6 +277,13 @@ button.go:hover{filter:brightness(1.08)}
     </div>
   </div>
 </div>
+
+<footer class="site-footer">
+  <nav aria-label="읽을거리">
+    <a href="guide-basics.html">사주 기초</a> · <a href="guide-sipsin.html">십성 풀이</a> · <a href="guide-sinsal.html">신살 풀이</a> · <a href="guide-daeun.html">대운·세운</a>
+  </nav>
+  明月菩薩 명월보살 만세력 © 2026 · 본 사이트의 운세 콘텐츠는 참고용입니다
+</footer>
 </div>
 
 <script>
@@ -980,8 +1033,64 @@ function renderFortune(r,dStem){
   fh+=luckItem('good','운이 들어오는 음식',`${f.food.good}<small>${EL_KO[f.luckyEl]} 기운을 보충해 줍니다</small>`);
   fh+=luckItem('bad','피해야 할 음식',`${f.food.bad}<small>${EL_KO[f.avoidEl]} 기운 과다 주의</small>`);
   fh+='</div>';
+  // 행운 아이템 (쿠팡 — 파트너스 태그 설정 시 수익 링크로 전환)
+  const cp=q=>{
+    let u='https://www.coupang.com/np/search?q='+encodeURIComponent(q);
+    if(window.SITE_CONFIG&&SITE_CONFIG.coupangTag)u+='&channel=affiliate&lptag='+encodeURIComponent(SITE_CONFIG.coupangTag);
+    return u;
+  };
+  fh+=`<div class="coupang-row">
+    <a href="${cp(f.food.good)}" target="_blank" rel="nofollow sponsored noopener">🛒 행운의 음식 「${f.food.good}」 보러가기</a>
+    <a href="${cp(f.color.good+' 소품')}" target="_blank" rel="nofollow sponsored noopener">🎁 행운의 색 「${f.color.good}」 소품 보러가기</a>
+  </div>`;
+  if(window.SITE_CONFIG&&SITE_CONFIG.coupangTag)fh+=`<div class="coupang-note">위 링크는 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.</div>`;
   $('fortune').innerHTML=fh;
 }
+
+// ── 공유 / 이미지 저장 ──
+const SHARE_URL=location.origin+location.pathname;
+const SHARE_TITLE='明月菩薩 : 명월보살 만세력';
+const SHARE_TEXT='내 사주팔자와 오늘의 운세, 여기서 무료로 볼 수 있어요 🔮';
+const OG_IMG='https://inandout-kr.github.io/saju-calculator/assets/og.png';
+function copyLink(){
+  (navigator.clipboard?navigator.clipboard.writeText(SHARE_URL):Promise.reject())
+    .then(()=>alert('링크가 복사되었습니다. 카톡 등에 붙여넣어 공유하세요!'))
+    .catch(()=>prompt('아래 주소를 복사하세요',SHARE_URL));
+}
+$('btnShare').addEventListener('click',()=>{
+  if(window.SITE_CONFIG&&SITE_CONFIG.kakaoJsKey&&window.Kakao&&Kakao.isInitialized()){
+    Kakao.Share.sendDefault({objectType:'feed',
+      content:{title:SHARE_TITLE,description:SHARE_TEXT,imageUrl:OG_IMG,link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}},
+      buttons:[{title:'내 사주 보러가기',link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}}]});
+    return;
+  }
+  if(navigator.share)navigator.share({title:SHARE_TITLE,text:SHARE_TEXT,url:SHARE_URL}).catch(()=>{});
+  else copyLink();
+});
+$('btnCopy').addEventListener('click',copyLink);
+$('btnSaveImg').addEventListener('click',async()=>{
+  const btn=$('btnSaveImg');btn.disabled=true;btn.textContent='이미지 생성 중…';
+  try{
+    if(!window.html2canvas)await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=res;s.onerror=()=>rej(new Error('스크립트 로드 실패'));document.head.appendChild(s);
+    });
+    const canvas=await html2canvas(document.getElementById('result'),{
+      backgroundColor:'#f7f3ea',scale:2,useCORS:true,
+      ignoreElements:el=>el.classList&&el.classList.contains('share-bar')
+    });
+    const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));
+    const file=new File([blob],'saju.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:SHARE_TITLE}).catch(()=>{});
+    }else{
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='명월보살_만세력_결과.png';a.click();URL.revokeObjectURL(a.href);
+    }
+  }catch(e){alert('이미지 생성에 실패했습니다: '+e.message);}
+  btn.disabled=false;btn.textContent='📷 결과 이미지 저장';
+});
 </script>
 </body>
 </html>
