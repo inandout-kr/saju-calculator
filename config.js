@@ -12,7 +12,7 @@ window.SITE_CONFIG = {
   // Kakao developers JavaScript 키 — developers.kakao.com (카카오톡 공유 버튼용)
   kakaoJsKey: '',
   // 쿠팡 파트너스 태그 — partners.coupang.com (형식: AF1234567)
-  coupangTag: ''
+  coupangTag: 'AF4749854'
 };
 
 (function () {
