@@ -123,5 +123,15 @@ for(let ds=0;ds<10;ds++){
 }
 eq('일간 10종 운세 생성',allOk2,true);
 
+// 13. 오늘의 행운 아이템 (일진 기준 매일 변경)
+eq('오늘의 아이템 필드',f1.today.dailyEl>=0&&f1.today.dailyEl<=4&&typeof f1.today.dailyFood==='string'&&f1.today.dailyFood.length>0&&typeof f1.today.dailyColor==='string',true);
+// 연속 10일 동안 음식이 최소 2가지 이상으로 바뀌는지 (매일 변경 확인)
+const foods=new Set();
+for(let i=0;i<10;i++)foods.add(calcFortune(r,NOW+i*86400000).today.dailyFood);
+eq('일별 아이템 변화(10일 중 2종 이상)',foods.size>=2,true);
+// 일진 오행이 용신과 같으면 dailyEl=용신 (우선순위 규칙)
+const fdx=fortuneDay(2,2,combine60(7,9),3,1,0); // 일진 신유(辛酉)=금금, 용신 금 → dailyEl=3
+eq('일진=용신이면 용신 선택',fdx.dailyEl,3);
+
 console.log(`\n결과: ${pass} pass / ${fail} fail`);
 process.exit(fail?1:0);
