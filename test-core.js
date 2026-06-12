@@ -3,7 +3,7 @@ const fs=require('fs');
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const m=html.match(/\/\*CORE-START\*\/([\s\S]*?)\/\*CORE-END\*\//);
 if(!m){console.error('CORE block not found');process.exit(1);}
-eval(m[1]+';Object.assign(globalThis,{LUNAR_INFO,day60FromYMD,ipchunUtc,lunarToSolar,solarToLunar,calcSaju,name60,combine60,tenGod,twelveStage,calcSinsal,calcFortune,isYukhap});');
+eval(m[1]+';Object.assign(globalThis,{LUNAR_INFO,day60FromYMD,ipchunUtc,lunarToSolar,solarToLunar,calcSaju,name60,combine60,tenGod,twelveStage,calcSinsal,calcFortune,isYukhap,fortuneDay,fortuneYearGen});');
 
 let pass=0,fail=0;
 function eq(name,got,want){
@@ -98,6 +98,30 @@ eq('육합 자-인 아님',isYukhap(0,2),false);
 const rn=calcSaju({y:1990,m:1,d:1,hh:null,mi:null,gender:'M',solarCorr:true,histTz:true,jasi:'next'});
 const fn=calcFortune(rn,NOW);
 eq('시간모름 운세 계산',!!(fn.today&&fn.year&&fn.region.good.kr),true);
+
+// 12. 상세 운세 문단 구조: 오늘 5문단, 올해 7문단, undefined/빈 문자열 없음
+eq('오늘 문단 수',f1.today.paras.length,5);
+eq('올해 문단 수',f1.year.paras.length,7);
+const clean=ps=>ps.every(p=>typeof p[0]==='string'&&typeof p[1]==='string'&&p[1].length>30&&!p[1].includes('undefined'));
+eq('오늘 문단 내용 정상',clean(f1.today.paras),true);
+eq('올해 문단 내용 정상',clean(f1.year.paras),true);
+// 60갑자 일진 × 임의 사주 전수 검사 (테이블 누락 키 탐지)
+let allOk=true;
+for(let t60=0;t60<60;t60++){
+  const fd=fortuneDay(r.pillars.day[0],r.pillars.day[1],t60,f1.luckyEl,f1.avoidEl,t60);
+  const fy=fortuneYearGen(r.pillars.day[0],r.pillars.day[1],t60,2026,f1.luckyEl,f1.avoidEl,r,t60);
+  if(!clean(fd.paras)||!clean(fy.paras)||fd.score<8||fd.score>98||fy.score<8||fy.score>98){allOk=false;console.log('  문제 일진:',t60,name60(t60));break;}
+}
+eq('60갑자 전수 운세 생성',allOk,true);
+// 다른 일간(10종)으로도 전수 확인
+let allOk2=true;
+for(let ds=0;ds<10;ds++){
+  for(let t60=0;t60<60;t60+=7){
+    const fd=fortuneDay(ds,4,t60,0,1,t60);
+    if(!clean(fd.paras)){allOk2=false;console.log('  문제 일간:',ds,'일진:',t60);break;}
+  }
+}
+eq('일간 10종 운세 생성',allOk2,true);
 
 console.log(`\n결과: ${pass} pass / ${fail} fail`);
 process.exit(fail?1:0);
