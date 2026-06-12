@@ -1033,17 +1033,16 @@ function renderFortune(r,dStem){
   fh+=luckItem('good','운이 들어오는 음식',`${f.food.good}<small>${EL_KO[f.luckyEl]} 기운을 보충해 줍니다</small>`);
   fh+=luckItem('bad','피해야 할 음식',`${f.food.bad}<small>${EL_KO[f.avoidEl]} 기운 과다 주의</small>`);
   fh+='</div>';
-  // 행운 아이템 (쿠팡 — 파트너스 태그 설정 시 수익 링크로 전환)
-  const cp=q=>{
-    let u='https://www.coupang.com/np/search?q='+encodeURIComponent(q);
-    if(window.SITE_CONFIG&&SITE_CONFIG.coupangTag)u+='&channel=affiliate&lptag='+encodeURIComponent(SITE_CONFIG.coupangTag);
-    return u;
-  };
+  // 행운 아이템 (쿠팡 파트너스 공식 단축링크 — 용신 오행별, 없으면 검색 링크로 대체)
+  const SC=window.SITE_CONFIG||{};
+  const cp=q=>'https://www.coupang.com/np/search?q='+encodeURIComponent(q);
+  const foodUrl=(SC.coupangFood&&SC.coupangFood[f.luckyEl])||cp(f.food.good);
+  const itemUrl=(SC.coupangItem&&SC.coupangItem[f.luckyEl])||cp(f.color.good+' 소품');
   fh+=`<div class="coupang-row">
-    <a href="${cp(f.food.good)}" target="_blank" rel="nofollow sponsored noopener">🛒 행운의 음식 「${f.food.good}」 보러가기</a>
-    <a href="${cp(f.color.good+' 소품')}" target="_blank" rel="nofollow sponsored noopener">🎁 행운의 색 「${f.color.good}」 소품 보러가기</a>
+    <a href="${foodUrl}" target="_blank" rel="nofollow sponsored noopener">🛒 ${EL_KO[f.luckyEl]}(${EL_HJ[f.luckyEl]}) 기운 · 행운의 음식 보러가기</a>
+    <a href="${itemUrl}" target="_blank" rel="nofollow sponsored noopener">🎁 ${f.color.good} · 행운의 소품 보러가기</a>
   </div>`;
-  if(window.SITE_CONFIG&&SITE_CONFIG.coupangTag)fh+=`<div class="coupang-note">위 링크는 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.</div>`;
+  if(SC.coupangTag||SC.coupangFood)fh+=`<div class="coupang-note">위 링크는 쿠팡 파트너스 활동의 일환으로, 구매 시 일정액의 수수료를 제공받습니다.</div>`;
   $('fortune').innerHTML=fh;
 }
 

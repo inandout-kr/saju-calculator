@@ -12,7 +12,22 @@ window.SITE_CONFIG = {
   // Kakao developers JavaScript 키 — developers.kakao.com (카카오톡 공유 버튼용)
   kakaoJsKey: '',
   // 쿠팡 파트너스 태그 — partners.coupang.com (형식: AF1234567)
-  coupangTag: 'AF4749854'
+  coupangTag: 'AF4749854',
+  // 쿠팡 파트너스 공식 단축링크 — 오행 순서 [목, 화, 토, 금, 수]
+  coupangFood: [
+    'https://link.coupang.com/a/evX7g0hQCi', // 목: 매실차
+    'https://link.coupang.com/a/evX9fipMfk', // 화: 토마토
+    'https://link.coupang.com/a/evYbL2wGDQ', // 토: 고구마
+    'https://link.coupang.com/a/evYdFqtTy0', // 금: 생강차
+    'https://link.coupang.com/a/evYeTfpUu4'  // 수: 검은콩
+  ],
+  coupangItem: [
+    'https://link.coupang.com/a/evYkbro3LU', // 목: 초록색 소품
+    'https://link.coupang.com/a/evYlfSCNAy', // 화: 빨간색 소품
+    'https://link.coupang.com/a/evYmgwAank', // 토: 노란색 소품
+    'https://link.coupang.com/a/evYnVSg6DI', // 금: 흰색 소품
+    'https://link.coupang.com/a/evYqnz3cSy'  // 수: 네이비 소품
+  ]
 };
 
 (function () {
